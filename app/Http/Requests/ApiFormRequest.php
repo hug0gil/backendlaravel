@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApiRequest extends FormRequest
+class ApiFormRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)
     {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BackendController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QueriesController;
@@ -9,6 +10,7 @@ use App\Http\Middleware\UpperCaseName;
 use Illuminate\Support\Facades\Route;
 
 route::get("/test", function () {
+    //dd(config('jwt.secret'));
     return "El backend funciona correctamente";
 });
 
@@ -39,4 +41,17 @@ Route::get(uri: "/query/method/join", action: [QueriesController::class, "join"]
 Route::get(uri: "/query/method/groupBy", action: [QueriesController::class, "groupBy"]);
 
 Route::apiResource("/product", ProductController::class)
-    ->middleware([LogRequests::class]);
+    ->middleware(["jwt.auth", LogRequests::class]);
+
+// jwt.auth middleware sin el token no tiene permiso
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login'])->name("login");
+
+//Creamos una agrupación y todos los endpoints que ponemos dentro pasan por el middleware
+
+Route::middleware("jwt.auth")->group(function () {
+    Route::get("/who", [AuthController::class, "who"]);
+    Route::post("/logout", [AuthController::class, "logout"]);
+    Route::post("/refresh", [AuthController::class, "refresh"]);
+});

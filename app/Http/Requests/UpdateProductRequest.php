@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class UpdateProductRequest extends ApiRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,10 +22,10 @@ class UpdateProductRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            "name" => ["Required", "string", "max:255"],
-            "description" => ["Required", "string", "max:2000"],
-            "price" => ["Required", "numeric"],
-            "category_id" => ["Required", "exists:category,id"]
+            "name" => ["required", "string", "max:255"],
+            "description" => ["required", "string", "max:2000"],
+            "price" => ["required", "numeric"],
+            "category_id" => ["required", "exists:category,id"]
         ];
     }
 
