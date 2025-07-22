@@ -54,6 +54,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return []; //Añadimos datos al PayLoad del token
+        return []; //Añadimos datos al PayLoad del token para evitar consultar algunas cosas en la BDD (ej. role)
     }
 }

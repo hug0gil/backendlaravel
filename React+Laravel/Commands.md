@@ -17,5 +17,18 @@
 `Crear request`
 - php artisan make:request UpdateProductRequest
 
+`Reiniciar cache de Laravel`
+- php artisan config:clear
+- php artisan cache:clear
+- php artisan config:cache
+
+`Permite ejecutar código de PHP en tiempo real`
+- php artisan tinker
+
+`Actualizar caché`
+- php artisan config:clear
+- php artisan cache:clear
+
+
 [[Laravel 🔥]]
 
