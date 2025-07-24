@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BackendController;
 use App\Http\Controllers\InfoController;
@@ -65,3 +66,5 @@ Route::get("/info/encryptEmail/{data}", [InfoController::class, "encryptEmail"])
 Route::get("/info/encryptEmail2/{data}", [InfoController::class, "encryptEmail2"]);
 
 Route::get("/info/singleton", [InfoController::class, "singleton"]);
+
+Route::get("/api", [ApiController::class, "get"]);

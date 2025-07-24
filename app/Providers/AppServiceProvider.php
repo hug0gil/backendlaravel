@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SingletonService::class, SingletonService::class);
     }
 
-    /**
+    /*
      * Bootstrap any application services.
      */
     public function boot(): void
