@@ -5,6 +5,7 @@
 - Si necesitas que un modelo funcione con JWT, debe implementar la **interfaz `JWTSubject
 - Cuando una clase necesita un parámetro externo (como una clave), usar **una función anónima en `bind()`** para pasarlo
 -  Antes de hacer `JWTAuth::getToken()` asegúrate de que el token esté presente, o dará `null`
+- `Http::withoutVerifying()` cuando de problemas el ttl
 # Migrations
 
 `Las migraciones son archivos que definen cómo debe crearse o modificarse la base de datos usando código PHP.`
@@ -339,6 +340,107 @@ Pongo un app->bind como "default" por así decirlo y luego especifíco para cada
 `->give(HiService::class);`
 
 
+# Events y Listeners
+
+## 🔔 Event (Evento)
+
+Un **evento** es una clase que representa que "algo ha pasado" en la aplicación.  
+Ejemplo: `UserRegistered`, `OrderShipped`, `EmailVerified`
+
+Ejecutar evento 
+
+`event(args: new UserRegistered($user));`
+
+## 👂 Listener (Escuchador)
+
+Un **listener** es una clase que **responde** a un evento y ejecuta lógica cuando ese evento ocurre.  
+Ejemplo: Enviar un email de bienvenida cuando se dispara `UserRegistered`
+
+
+### Segundo plano
+
+Para ejecutar un evento en segundo plano en su listener hay que implementar `ShouldQueue`
+
+`class LogUserRegistered implements ShouldQueue`
+
+
+
+# Commands
+
+
+## Tips
+
+Para commands que usemos a diario 
+
+`'app:nombre'`
+
+Para commands de mantenimiento
+
+`'maintenance:nombre'`
+
+## Task Scheduling (programación de tareas)
+
+En bootstrap/app.php
+
+`->withSchedule(function (Schedule $schedule) {
+`$schedule->command("maintenance:clear-old-uploads")->everyMinute();
+
+Opciones más usadas de tiempo
+
+->everyMinute()           // Ejecuta la tarea cada minuto
+->everyFiveMinutes()      // Ejecuta cada 5 minutos
+->hourly()                // Ejecuta una vez cada hora
+->dailyAt('13:00')        // Ejecuta una vez al día a las 13:00
+->weeklyOn(1, '8:00')     // Ejecuta cada lunes a las 08:00 (1 = lunes)
+
+
+# PEST
+
+## Instalación
+
+Borramos PEST PHP/PHPUnit si lo tenemos instalado
+
+`composer remove phpunit/phpunit`
+
+
+Instalamos con composer PEST PHP
+
+`composer require pestphp/pest --dev --with-all-dependencies`
+
+
+Ejecutamos este comando para que se cree Pest.php
+
+`./vendor/bin/pest`
+
+
+## Uso
+
+<u>Pruebas Unitarias</u>
+
+Se usan para  probar una clase o función aislada, sin acceder a la base de datos, servicios externos ni al framework
+
+
+<u>Pruebas Funcionales</u>
+
+Para probar funcionalidades completas que usan partes del framework, como controladores, rutas, DB, middleware...
+
+
+## <u>Configuración</u>
+
+A la hora de hacer testing accediendo a la bdd si vamos a hacerlo con datos reales y no en memoria con factories, hay que cambiar phpunit.xml las líneas de la bdd y poner entre operadores:
+
+- env name="DB_CONNECTION" value="mariadb"
+- env name="DB_DATABASE" value="backendlaravel"
+
+Si vamos a hacerlo con una BDD únicamente creada para pruebas tenemos que crear .env.testing
+
+Usaremos el trait uses(RefreshDatabase::class); para realizar las migraciones y crear toda la estructura de la BDD para la BDD de testing
+
+
+
 
 [[Laravel 🔥]]
+
+
+
 
