@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('sale', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->text("description");
-            $table->decimal("price", 8, 2);
+            $table->decimal('total', 10, 2);
+            $table->timestamp('sale_date')->useCurrent();
+            $table->string('email');
+            $table->softDeletes();
             $table->timestamps();
-            $table->softDeletes(); // Campo para anotar fecha de eliminación
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('sale');
     }
 };
