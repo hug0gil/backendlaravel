@@ -25,7 +25,7 @@ class UpdateProductRequest extends FormRequest
             "name" => ["required", "string", "max:255"],
             "description" => ["required", "string", "max:2000"],
             "price" => ["required", "numeric"],
-            "category_id" => ["required", "exists:category,id"]
+            "category_id" => ["required", "exists:category,id"] //exists:table,column
         ];
     }
 

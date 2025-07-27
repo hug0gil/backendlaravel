@@ -22,7 +22,7 @@ class EncryptService
     {
         $decodeData = base64_decode($data);
 
-        [$key, $encrypted] = explode(":", $decodeData);
+        [$key, $encrypted] = explode(":", $decodeData, 2);
 
         if ($key !== $this->key) {
             throw new \Exception("Incorrect key");

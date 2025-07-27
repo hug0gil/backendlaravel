@@ -44,6 +44,7 @@ Route::get(uri: "/query/method/groupBy", action: [QueriesController::class, "gro
 
 Route::apiResource("/product", ProductController::class)
     ->middleware(["jwt.auth", LogRequests::class]);
+//Aplica un middleware para JWT y otro para los loggear información
 
 // jwt.auth middleware sin el token no tiene permiso
 
